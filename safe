@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SafeCity SOS</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0b0f1a;
+  color: white;
+  text-align: center;
+}
+
+.header {
+  padding: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  background: #111827;
+}
+
+.container {
+  padding: 20px;
+}
+
+.btn {
+  width: 90%;
+  padding: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.sos {
+  background: red;
+  color: white;
+  font-weight: bold;
+}
+
+.location {
+  background: #2563eb;
+  color: white;
+}
+
+.community {
+  background: #10b981;
+  color: white;
+}
+
+.box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #1f2937;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🚨 SAFE CITY SOS</div>
+
+<div class="container">
+
+<button class="btn sos" onclick="sendSOS()">🚨 SOS URGENCE</button>
+
+<button class="btn location" onclick="shareLocation()">📍 Envoyer ma position</button>
+
+<button class="btn community" onclick="alertCommunity()">👥 Alerter communauté</button>
+
+<div class="box" id="output">
+Aucune alerte envoyée
+</div>
+
+</div>
+
+<script>
+let lastLocation = "";
+
+function getLocation(callback){
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      const link = https://www.google.com/maps?q=${lat},${lon};
+      lastLocation = link;
+      callback(link);
+    },
+    () => alert("GPS refusé ou indisponible")
+  );
+}
+
+function sendSOS(){
+  getLocation((link)=>{
+    document.getElementById("output").innerHTML =
+    "🚨 SOS ENVOYÉ<br>📍 " + link;
+
+    alert("SOS envoyé avec localisation !");
+  });
+}
+
+function shareLocation(){
+  getLocation((link)=>{
+    document.getElementById("output").innerHTML =
+    "📍 Position envoyée<br>" + link;
+
+    alert("Position envoyée !");
+  });
+}
+
+function alertCommunity(){
+  getLocation((link)=>{
+    document.getElementById("output").innerHTML =
+    "👥 Communauté alertée<br>" + link;
+
+    alert("Communauté alertée !");
+  });
+}
+</script>
+
+</body>
+</html>
